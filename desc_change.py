@@ -1,5 +1,6 @@
 import requests
 import json
+import html
 
 access_token = "864860e8fa191548d478eb6f64673c38"
 headers = {
@@ -51,6 +52,31 @@ def GetNextProduct(cursor):
   request = requests.post(url, json={'query': query}, headers=headers)
   return(request.json())
 
+def ChangeProdDesc(prodId, desc):
+
+  input = f'{{ id: "{prodId}", descriptionHtml: """{desc}""" }}'
+  # print(input)
+
+  mutation = """
+  mutation productUpdate {{
+    productUpdate(input:
+      {input}
+    ) {{
+      product {{
+        title
+        descriptionHtml
+      }}
+      userErrors {{
+        field
+        message
+      }}
+    }}
+  }}
+  """.format(input = input)
+
+  request = requests.post(url, json={'query': mutation}, headers=headers)
+  return(request.json())
+
 result = GetFirstProduct()
 
 product = result["data"]["products"]
@@ -62,18 +88,21 @@ prodId = prodNode["id"]
 title = prodNode["title"]
 
 counter = 1
-
 print(f"{counter}: {title}")
+# print(description)
 
-while(hasNextPage):
-  result = GetNextProduct(cursor)
+result = ChangeProdDesc(prodId, description)
+print(result)
 
-  product = result["data"]["products"]
-  hasNextPage = product["pageInfo"]["hasNextPage"]
-  cursor = product["edges"][0]["cursor"]
-  prodNode = product["edges"][0]["node"]
-  description = prodNode["descriptionHtml"]
-  prodId = prodNode["id"]
-  title = prodNode["title"]
-  counter += 1
-  print(f"{counter}: {title}")
+# while(hasNextPage):
+#   result = GetNextProduct(cursor)
+
+#   product = result["data"]["products"]
+#   hasNextPage = product["pageInfo"]["hasNextPage"]
+#   cursor = product["edges"][0]["cursor"]
+#   prodNode = product["edges"][0]["node"]
+#   description = prodNode["descriptionHtml"]
+#   prodId = prodNode["id"]
+#   title = prodNode["title"]
+#   counter += 1
+#   print(f"{counter}: {title}")
