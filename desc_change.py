@@ -2,11 +2,15 @@ import requests
 import json
 import html
 
-access_token = "864860e8fa191548d478eb6f64673c38"
+from dotenv import load_dotenv
+load_dotenv()
+import os
+
+access_token = os.getenv("access_token")
 headers = {
   "X-Shopify-Access-Token": access_token
 }
-url = 'https://absolute-medical-equipment.myshopify.com/admin/api/2019-10/graphql.json'
+url = os.getenv("url")
 
 def GetFirstProduct():
   query = """
@@ -90,6 +94,8 @@ title = prodNode["title"]
 counter = 1
 print(f"{counter}: {title}")
 # print(description)
+
+# Regular expressions for altering the description
 
 result = ChangeProdDesc(prodId, description)
 print(result)
