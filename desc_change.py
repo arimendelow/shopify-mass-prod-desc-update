@@ -1,6 +1,7 @@
 import requests
 import json
 import html
+import re
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -95,10 +96,11 @@ counter = 1
 print(f"{counter}: {title}")
 # print(description)
 
-# Regular expressions for altering the description
+# Rules for altering the description
+description = re.sub("a.m.e. is proud", "We are proud", description, flags=re.I)
 
 result = ChangeProdDesc(prodId, description)
-print(result)
+# print(result)
 
 # while(hasNextPage):
 #   result = GetNextProduct(cursor)
