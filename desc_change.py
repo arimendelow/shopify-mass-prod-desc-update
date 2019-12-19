@@ -18,6 +18,7 @@ def GetFirstProduct():
         cursor
         node {
           title
+          id
           descriptionHtml
         }
       }
@@ -39,6 +40,7 @@ def GetNextProduct(cursor):
         cursor
         node {{
           title
+          id
           descriptionHtml
         }}
       }}
@@ -56,6 +58,7 @@ hasNextPage = product["pageInfo"]["hasNextPage"]
 cursor = product["edges"][0]["cursor"]
 prodNode = product["edges"][0]["node"]
 description = prodNode["descriptionHtml"]
+prodId = prodNode["id"]
 title = prodNode["title"]
 
 counter = 1
@@ -70,6 +73,7 @@ while(hasNextPage):
   cursor = product["edges"][0]["cursor"]
   prodNode = product["edges"][0]["node"]
   description = prodNode["descriptionHtml"]
+  prodId = prodNode["id"]
   title = prodNode["title"]
   counter += 1
   print(f"{counter}: {title}")
