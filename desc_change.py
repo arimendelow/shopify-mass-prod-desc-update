@@ -84,6 +84,7 @@ def ChangeProdDesc(prodId, desc):
 
 result = GetFirstProduct()
 counter = 1
+changed = 0
 
 hasNextPage = True
 while(hasNextPage):
@@ -113,6 +114,7 @@ while(hasNextPage):
   if (descriptionNew != descriptionOrig):
     print("Sending updated description...")
     result = ChangeProdDesc(prodId, descriptionNew)
+    changed += 1
     print("Done.")
   else:
     print("No changes made!")
@@ -124,3 +126,4 @@ while(hasNextPage):
     result = GetNextProduct(cursor)
   else:
     print(f"Finished going through all {counter} products!")
+    print(f"Changed the descriptions on {changed} products.")
