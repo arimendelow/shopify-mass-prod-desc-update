@@ -106,7 +106,7 @@ for change in changes:
   toAlter = change[0]
   alteration = change[1]
   if(re.search(toAlter, descriptionOrig, flags=re.I)):
-    print(f"Found match for {toAlter}")
+    print(f"Found match for '{toAlter}'...")
     descriptionNew = re.sub(toAlter, alteration, descriptionOrig, flags=re.I)
 
 if (descriptionNew != descriptionOrig):
