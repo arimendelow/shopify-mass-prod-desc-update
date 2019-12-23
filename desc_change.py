@@ -88,7 +88,7 @@ product = result["data"]["products"]
 hasNextPage = product["pageInfo"]["hasNextPage"]
 cursor = product["edges"][0]["cursor"]
 prodNode = product["edges"][0]["node"]
-description = prodNode["descriptionHtml"]
+descriptionOrig = prodNode["descriptionHtml"]
 prodId = prodNode["id"]
 title = prodNode["title"]
 
@@ -97,10 +97,24 @@ print(f"{counter}: {title}")
 # print(description)
 
 # Rules for altering the description
-description = re.sub("a.m.e. is proud", "We are proud", description, flags=re.I)
+changes = [
+  ("a.m.e. is proud", "We are proud")
+]
 
-result = ChangeProdDesc(prodId, description)
-# print(result)
+descriptionNew = descriptionOrig
+for change in changes:
+  toAlter = change[0]
+  alteration = change[1]
+  if(re.search(toAlter, descriptionOrig, flags=re.I)):
+    print(f"Found match for {toAlter}")
+    descriptionNew = re.sub(toAlter, alteration, descriptionOrig, flags=re.I)
+
+if (descriptionNew != descriptionOrig):
+  print("Sending updated description...")
+  result = ChangeProdDesc(prodId, descriptionNew)
+  print("Done.")
+else:
+  print("No changes made!")
 
 # while(hasNextPage):
 #   result = GetNextProduct(cursor)
