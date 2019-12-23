@@ -16,7 +16,7 @@ url = os.getenv("url")
 def GetFirstProduct():
   query = """
   {
-    products(first: 1) {
+    products(sortKey: TITLE, first: 1) {
       pageInfo {
         hasNextPage
       }
@@ -38,7 +38,7 @@ def GetFirstProduct():
 def GetNextProduct(cursor):
   query = """
   {{
-    products(first: 1 after: "{cur}") {{
+    products(sortKey: TITLE, first: 1 after: "{cur}") {{
       pageInfo {{
         hasNextPage
       }}
