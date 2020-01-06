@@ -99,8 +99,10 @@ while(hasNextPage):
   print(f"{counter}: {title}")
 
   # Rules for altering the description
+  # These are regular expressions - use https://regex101.com/ to help write them
+  # The structure is [("regex1", "replacement1"), ("regex2", "replacement2")...]
   changes = [
-    ("a.m.e. is proud", "We are proud")
+    ("Absolute Medical Equipment \(A.M.E. Ultrasounds\) is proud", "We are proud")
   ]
 
   descriptionNew = descriptionOrig
